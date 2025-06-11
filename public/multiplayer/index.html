@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiplayer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="info" style="position: fixed; top: 5px; left: 5px; z-index: 9999;"></div>
+    <div id="lobby">
+      <div class="card">
+        <h2 id="hello">Bun venit la Multiplayer</h2>
+        <input type="text" id="username" placeholder="Nume" />
+        <button id="join">Join</button>
+      </div>
+      <div class="card">
+        <h2>Room</h2>
+        <div id="room"></div>
+        <div id="hero"></div>
+      </div>
+
+      <div class="card">
+        <h2>Players</h2>
+        <div id="players">
+          <ul id="player-list"></ul>
+        </div>
+      </div>
+      <div class="card">
+        <h3 id="message"></h3>
+        <h1 id="countdown" style="display: none"></h1>
+      </div>
+    </div>
+    <div id="game" style="display: none">
+      <canvas id="canvas" width="1600" height="900"></canvas>
+    </div>
+    <div id="gameover" style="display: none">
+      <h1>Game Over</h1>
+      <button id="restart">Restart</button>
+    </div>
+
+    <script type="module" src="main.js" defer></script>
+  </body>
+</html>
