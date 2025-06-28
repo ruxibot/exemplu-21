@@ -1,6 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+//resize
 const baseWidth = 1600;
 const baseHeight = 900;
 function resizeCanvas() {
@@ -12,6 +13,7 @@ function resizeCanvas() {
 
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
+
 //keys
 const keys = {};
 window.addEventListener("keydown", (e) => {
@@ -20,6 +22,7 @@ window.addEventListener("keydown", (e) => {
 window.addEventListener("keyup", (e) => {
   delete keys[e.key];
 });
+
 //teren
 const image = new Image();
 image.src = "teren.png";
@@ -31,10 +34,14 @@ const teren = {
   bottom: 900 - 20,
 };
 
+const radian=Math.PI/180
+
 const ball = {
   x: 800,
   y: 450,
   radius: 20,
+  v: 5,
+  angle: (Math.random() * 60+20) * (Math.random() < 0.5 ? 1 : -1)+180*(Math.random() < 0.5 ? 0 : 1),
   vx: 5,
   vy: 5,
   color: "yellow",
@@ -46,13 +53,16 @@ const ball = {
     ctx.fill();
   },
   update: function () {
+    this.vx = this.v * Math.cos(this.angle * radian);
+    this.vy = this.v * Math.sin(this.angle * radian);
     this.x += this.vx;
     this.y += this.vy;
     //gol in poarta oponent
     if (this.x < teren.left - this.radius) {
       this.x = 800;
       this.y = 450;
-      this.vx *= -1;
+      //this.vx *= -1;
+      this.angle = (Math.random() * 40+20) * (Math.random() < 0.5 ? 1 : -1)+180*(Math.random() < 0.5 ? 0 : 1);
       player.score += 1;
     }
     //respins de oponent - ciocnire cu oponent
@@ -62,13 +72,18 @@ const ball = {
       this.y - this.radius < opponent.y + opponent.height
     ) {
       this.x = teren.left + this.radius + opponent.width;
-      this.vx *= -1;
+      console.log("angle1",this.angle);
+      //this.vx *= -1;
+      this.angle =180- this.angle;
+      console.log("angle2",this.angle);
+
     }
     //gol in poarta player
     if (this.x > teren.right - this.radius) {
       this.x = 800;
       this.y = 450;
-      this.vx *= -1;
+      //this.vx *= -1;
+      this.angle = (Math.random() * 60+20) * (Math.random() < 0.5 ? 1 : -1)+180*(Math.random() < 0.5 ? 0 : 1);
       opponent.score += 1;
     }
     //respins de player - ciocnire cu player
@@ -78,17 +93,22 @@ const ball = {
       this.y - this.radius < player.y + player.height
     ) {
       this.x = teren.right - this.radius - player.width;
-      this.vx *= -1;
+      //this.vx *= -1;
+      console.log("angle3",this.angle);
+      this.angle =180- this.angle;
+      console.log("angle4",this.angle);
     }
     //respins de teren sus
     if (this.y < teren.top + this.radius) {
       this.y = teren.top + this.radius;
-      this.vy *= -1;
+      //this.vy *= -1;
+      this.angle *= -1;
     }
     //respins de teren jos
     if (this.y > teren.bottom - this.radius) {
       this.y = teren.bottom - this.radius;
-      this.vy *= -1;
+      //this.vy *= -1;
+      this.angle *= -1;
     }
   },
 };
